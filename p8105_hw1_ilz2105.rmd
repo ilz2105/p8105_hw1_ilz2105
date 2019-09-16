@@ -1,0 +1,42 @@
+---
+title: "p8105_hw5_ilz2105"
+author: "Lulu Zhang"
+date: 2019-09-17 
+output: html_document
+---
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+```
+
+The chunk below contains:
+a random sample of size 8 from a standard Normal distribution
+a logical vector indicating whether elements of the sample are greater than 0
+a character vector of length 8
+a factor vector of length 8, with 3 different factor “levels”
+
+```{r df_create}
+
+plot_df = tibble(
+  ran_samp = rnorm(8),
+  log_vec = x >0,
+  vec_char = character(length = 8),
+  fac_vec = vec_char, levels= c(0, 1, 2),
+    labels=c("level_1", "level_2", "level_3")
+)
+
+
+```
+
+First we show a histogram of the `x` variable.
+
+```{r x_hist}
+ggplot(plot_df, aes(x = x)) + geom_histogram()
+```
+
+Next we show a scatterplot of `y` vs `x`. 
+
+```{r yx_scatter}
+ggplot(plot_df, aes(x = x, y = y)) + geom_point()
+```
