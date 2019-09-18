@@ -20,10 +20,10 @@ a factor vector of length 8, with 3 different factor “levels”
 
 plot_df = tibble(
   ran_samp = rnorm(8),
-  log_vec = x >0,
+  log_vec = ran_samp >0,
   vec_char = character(length = 8),
-  fac_vec = vec_char, levels= c(0, 1, 2),
-    labels=c("level_1", "level_2", "level_3")
+  fac_vec = vec_char, levels= 3,
+    labels=c("ran_samp", "log_vec","vec_char")
 )
 
 
