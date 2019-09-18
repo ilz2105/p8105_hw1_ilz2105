@@ -14,11 +14,11 @@ __Problem 1__
 library(tidyverse)
 ```
 
-Created a data frame that has:
-  a random sample of size 8 from a standard Normal distribution
-  a logical vector indicating whether elements of the sample are greater than 0
-  a character vector of length 8
-  a factor vector of length 8, with 3 different factor “levels”
+Bewlow I created a data frame that has:
+  a random sample of size 8 from a standard Normal distribution,
+  a logical vector indicating whether elements of the sample are greater than 0,
+  a character vector of length 8, and
+  a factor vector of length 8, with 3 different factor “levels”.
 
 ```{r df_create}
 
@@ -30,18 +30,19 @@ df_1 = tibble(
 )
 
 ### Take the mean of each variable in dataframe
-
 mean_samp = mean(pull(df_1, ran_samp))
 mean_log = mean(pull(df_1, log_vec))
 mean_char = mean(pull(df_1, vec_char))
 mean_fac = mean(pull(df_1, fac_vec))
 ```
 
-Found the mean for `mean_samp` and `mean_log`, but could not get the mean
+I found the mean for `mean_samp` and `mean_log`, but could not get the mean
 for `mean_char` and `mean_fac` because they were not numeric values.
+The mean for `mean_samp` is `r mean(pull(df_1, ran_samp))`, and the mean 
+for `mean_log` is `r mean(pull(df_1, log_vec))`.
 
 
-Below, applied `as.numeric` to the logical, character, and 
+Below, I applied `as.numeric` to the logical, character, and 
 factor vectors to coerce into numeric vectors.
 
 ```{r, eval = FALSE}
@@ -60,19 +61,18 @@ as.factor(pull(df_1, log_vec))*(pull(df_1, ran_samp))
 
 as.numeric(as.factor(pull(df_1, log_vec)))*(pull(df_1, ran_samp))
 ```
-We can mutiply a factor so trying to convert `log_vec` to a factor and then multiplying
-`ran_samp` by the result did not work. We are able to Convert `log_vec` to a factor and then convert 
+The product of `log_vec` after being converted to numeric and `ran_samp` is `r as.numeric(pull(df_1, log_vec))*(pull(df_1, ran_samp))`. 
+We cannot mutiply a factor, so trying to convert `log_vec` to a factor and then multiplying
+`ran_samp` by the result did not work. 
+However, we are able to convert `log_vec` to a factor and then convert 
 that to a numeric vector and multiply that by `ran_samp` because they are both numeric vectors. The 
 result was `r as.numeric(as.factor(pull(df_1, log_vec)))*(pull(df_1, ran_samp))`.
-
-
-
 
 --
 __Problem 2__
 --
 
-Created a data frame comprised of:
+Below is a data frame comprised of:
 x, a random sample of size 500 from a standard Normal distribution,
 y, a random sample of size 500 from a standard Normal distribution,
 a logical vector indicating whether x + y > 1,
@@ -98,13 +98,13 @@ The standard deviation of `x` is `r sd(pull(df_2, x))`.
 The proportion of cases for which x + y > 1 is `r mean(pull(df_2, logical_vec))`
 
 
-Below I created a scatterplot of y vs x and colored points using the logical variable. 
+Below I created a scatterplot of y vs x and colored points using the logical variable, `logical_vec`. 
 Then, I created a second and third scatterplot that color points using the numeric and factor 
-variables, respectively.
+variables, `num_log` and `fac_vec`, respectively.
 
 ```{r yx_scatter}
 # scatterplot with colored points using the logical variable
-plot_1= ggplot(df_2, aes(x, y, color = logical_vec)) + geom_point()
+plot_1 = ggplot(df_2, aes(x, y, color = logical_vec)) + geom_point()
 
 # scatterplot with colored points using the numeric variable
 plot_2 = ggplot(df_2, aes(x, y, color = num_log)) + geom_point()
@@ -114,7 +114,7 @@ plot_3 = ggplot(df_2, aes(x, y, color = fac_vec)) + geom_point()
 
 
 # export first scatterplot to directory
-#ggsave('plot_1')
+ggsave("plot_1.png")
 ```
 
 The color scheme was the same for the scatterplots that colored points using the logical variable `logical_vec`
