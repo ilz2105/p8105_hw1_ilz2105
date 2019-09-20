@@ -9,6 +9,7 @@ output: github_document
 __Problem 1__
 --
 
+#### Create a dataframe
 
 ```{r setup, include = FALSE}
 library(tidyverse)
@@ -21,6 +22,8 @@ Below I created a data frame that has:
   a factor vector of length 8, with 3 different factor “levels”.
 
 ```{r df_create}
+# set seed for reproducability
+set.seed(1)
 
 ## Create data frame
 df_1 = tibble(
@@ -37,11 +40,16 @@ mean_char = mean(pull(df_1, vec_char))
 mean_fac = mean(pull(df_1, fac_vec))
 ```
 
-I found the mean for `mean_samp` and `mean_log`, but could not get the mean
-for `mean_char` and `mean_fac` because they were not numeric values.
-The mean for `mean_samp` is `r mean(pull(df_1, ran_samp))`, and the mean 
-for `mean_log` is `r mean(pull(df_1, log_vec))`.
+I found the mean for `ran_samp` and `log_vec`, and named them `mean_samp`
+and `mean_log`, respectively, but could not get the mean
+for `vec_char` and `fac_vec` because they were not numeric or logical values.
+The mean for `ran_samp` is `r mean_samp`, and the mean 
+for `mean_log` is `r mean_log`. This is possible because 
+`ran_samp` and `log_vec` are numeric and logical vectors 
+so we can take the mean. 
 
+
+#### Use `as.numeric` for coercion
 
 Below, I applied `as.numeric` to the logical, character, and 
 factor vectors to coerce into numeric vectors.
@@ -63,8 +71,10 @@ as.factor(pull(df_1, log_vec))*(pull(df_1, ran_samp))
 
 as.numeric(as.factor(pull(df_1, log_vec)))*(pull(df_1, ran_samp))
 ```
-The product of `log_vec` after being converted to numeric and `ran_samp` is `r as.numeric(pull(df_1, log_vec))*(pull(df_1, ran_samp))`. 
-We cannot mutiply a factor, so trying to convert `log_vec` to a factor and then multiplying
+After being converted to numeric, the product of `log_vec`and `ran_samp` is 
+`r as.numeric(pull(df_1, log_vec))*(pull(df_1, ran_samp))`. 
+We cannot mutiply a factor vector because it is not numeric, so trying to 
+convert `log_vec` to a factor and then multiplying
 `ran_samp` by the result did not work. 
 However, we are able to convert `log_vec` to a factor and then convert 
 that to a numeric vector and multiply that by `ran_samp` because they are both numeric vectors. The 
@@ -73,6 +83,8 @@ result was `r as.numeric(as.factor(pull(df_1, log_vec)))*(pull(df_1, ran_samp))`
 --
 __Problem 2__
 --
+
+#### Create a dataframe
 
 Below is a data frame comprised of:
 x, a random sample of size 500 from a standard Normal distribution,
@@ -83,6 +95,9 @@ and a factor vector created by coercing the above logical vector.
 
 
 ```{r}
+
+# set seed for reproducability
+set.seed(1234)
 
 ## create a data frame
 df_2 = tibble(
@@ -102,9 +117,13 @@ The standard deviation of `x` is `r sd(pull(df_2, x))`.
 The proportion of cases for which x + y > 1 is `r mean(pull(df_2, logical_vec))`
 
 
+#### Create scatterplots
+
+
 Below I created a scatterplot of y vs x and colored points using the logical variable, `logical_vec`. 
 Then, I created a second and third scatterplot that color points using the numeric and factor 
-variables, `num_log` and `fac_vec`, respectively.
+variables, `num_log` and `fac_vec`, respectively.Finally, I exported `plot_1` to my 
+project directory as a png file. 
 
 ```{r yx_scatter}
 
@@ -117,6 +136,10 @@ plot_2 = ggplot(df_2, aes(x, y, color = num_log)) + geom_point()
 ## scatterplot with colored points using the factor variable
 plot_3 = ggplot(df_2, aes(x, y, color = fac_vec)) + geom_point()
 
+#view plots
+plot_1
+plot_2
+plot_3
 
 ## export first scatterplot to directory
 ggsave("plot_1.png")
